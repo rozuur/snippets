@@ -11,7 +11,6 @@ class Crawler(object):
 
     def is_mailid(self, parsed):
         return parsed.scheme.startswith('mailto')
-        #return parsed.scheme is 'mailto'
 
     def is_link(self, parsed):
         return parsed.scheme.startswith('http') or not parsed.scheme
