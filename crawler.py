@@ -8,7 +8,7 @@ class Crawler(object):
         self._soup = BeautifulSoup(page)
 
     def fetch_links(self):
-        print self._soup.prettify()
+        print self._soup.findAll('a')
 
 if __name__ == '__main__':
     crawler = Crawler('http://www.innopark.in/')
