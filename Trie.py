@@ -82,7 +82,7 @@ class Trie:
             print fmt + '|' +  self._charfmt(c)
             self._display(node.children[c], 0, fmt + '|' + tabs)
         # last child is displayed by a plus to mark ending    
-        print fmt + '+'  + self._charfmt(childs[-1])
+        print fmt + '\\'  + self._charfmt(childs[-1])
         self._display(node.children[childs[-1]], 0, fmt + ' ' + tabs)
 
 

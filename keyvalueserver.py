@@ -1,7 +1,8 @@
 """
-connect to server telnet://localhost:50000/
+connect to server telnet localhost:50000
 
 only works for SET and GET commands
+use END to close connection
 """
 
 import socket
@@ -10,6 +11,8 @@ import os
 HOST = ''                 # Symbolic name meaning all available interfaces
 PORT = 50000              # Arbitrary non-privileged port
 print 'Starting server at port', PORT
+print 'Connect to server as telnet localhost:50000'
+print 'use "END" to close connection'
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.bind((HOST, PORT))
 s.listen(1)
@@ -30,6 +33,8 @@ while 1:
                 s, key = cmd.split()
                 if key in stored:
                         conn.send(stored[key])
+        elif cmd.startswith('END'):
+                break
 
 print 'Closing connection'
 conn.close()
