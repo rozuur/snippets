@@ -94,7 +94,7 @@ if __name__ == '__main__':
     tr = Trie('words.txt')
     #words = ["A", "to", "tea", "ted", "ten", "i", "in",  "inn"]
     #for word in words: tr.insert(word)   
-    #tr.display()
+    tr.display()
     print tr.find('across')
     print tr.wordsWithPrefix('acc', True)
     
