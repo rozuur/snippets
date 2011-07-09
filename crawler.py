@@ -56,8 +56,9 @@ class Crawler(object):
 
 if __name__ == '__main__':
     url = 'http://www.innopark.in/'
+    print 'crawling', url
+    print 'please wait...'
     crawler = Crawler('http://www.innopark.in/')
-    #print crawler.fetch_links()
     d = crawler.fetch_all_links()
     for link in sorted(d, key=d.get, reverse=True):
         print link, d[link]
