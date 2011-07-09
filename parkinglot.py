@@ -1,51 +1,71 @@
 class Parker:
-    def __init__(self, type, roles):
+    def __init__(self, type, role):
         self.type = type
-        self.roles = roles
+        self._role = role
 
     def vehicleType(self):
         return self.type
 
     def role(self):
         # returns the role of parker VIP, customer, etc
-        pass
+        return self._role
+
     def park(self, parkingSpace):
         # parks the vehicle in parking space
-        pass
+        if parkingSpace.isEmpty() and parkingSpace.canPark(self):
+            parkingSpace.setParker(self)
+
     def unpark(self, parkingSpace):
-        pass
+        # un park the vehicle
+        parkingSpace.setParker(None)
 
 class ParkingSpace:
-    def __init__(self, accessibility):
+    def __init__(self, accessibility, position):
         # initializes parking space with accessibility roles which are 
         # allowed to park
-        pass
-    def position(self, entrance):
-        # returns the position of space from parking lot's entrance
-        pass
+        self.roles = accessibility
+        self.position = position # position from parking lot's entrance
+        self.parked = False
+        self.parker = None
+
     def isEmpty(self):
         # returns true if the space is occupied
-        pass
+        return self.parked
+
     def setParker(self, parker):
-        # fills parking space
-        pass
+        # fills parking space with parker
+        self.parker  = parker
+        self.parked = True
+
     def getParker(self):
         # returns parker object who has occupied this space
-        pass
+        return self.parker
+
     def canOccupy(self, parker):
         # returns true if parker can occupy this position
-        pass
+        return parker.role() in self.roles and not self.isEmpty()
 
 class ParkingLot:
     def __init__(self, parkingSpaces):
         # initializes all parking spaces
-        pass
+        self.parkingSpaces = parkingSpaces
+
+    def _vacantSpaces(self):
+        return [p.isEmpty() for p in self.parkingSpaces]
+
     def isFull(self):
         # returns true if no parking spaces are available to parking
-        pass
+        return not self.vacantSpaces.any()
+
     def issueTicket(self, parker):
         # issues ticket for parking
-        pass
+        return random.randint()
+
     def getVacantSpace(self):
         # returns a vacant space near to entrance
-        pass
+        try:
+            return self._vacantSpaces()[0]
+        except:
+            return []
+
+        
