@@ -5,8 +5,8 @@ trie.insert('accord')
 
 def suggest(prefix):
     words = trie.wordsWithPrefix(prefix, True)
-    print words
     return sorted(words, key = words.get, reverse = True)
 
 if __name__ == '__main__':
+    print "Words starting with prefix 'acc'",
     print suggest('acc')
