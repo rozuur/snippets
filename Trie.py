@@ -92,9 +92,11 @@ class Trie:
 
 if __name__ == '__main__':
     tr = Trie('words.txt')
-    #words = ["A", "to", "tea", "ted", "ten", "i", "in",  "inn"]
-    #for word in words: tr.insert(word)   
+    print 'Displaying Trie'
     tr.display()
-    print tr.find('across')
-    print tr.wordsWithPrefix('acc', True)
+    print
+    print 'Is "across" in Trie',
+    print tr.find('across') != 0
+    print 'Words with prefix "acc"',
+    print tr.wordsWithPrefix('acc')
     
