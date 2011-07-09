@@ -47,13 +47,14 @@ class Trie:
         return current.freq
     
     def _allwords(self, node, prefix):
-        words = []
+        words = {}
         for char, child in node.children.items():
-            if child.isWord(): words.append(prefix + char)
-            words.extend(self._allwords(child, prefix + char))
+            if child.isWord(): 
+                words[prefix + char] = child.freq
+            words.update(self._allwords(child, prefix + char))
         return words
 
-    def wordsWithPrefix(self, prefix):
+    def wordsWithPrefix(self, prefix, includeFrequency = False):
         prefix = prefix.strip().lower()
         if not prefix:
             return
@@ -63,7 +64,11 @@ class Trie:
                 current = current.children[c]
             else:
                 return []
-        return self._allwords(current, prefix)
+        words = self._allwords(current, prefix)
+        if includeFrequency:
+            return words
+        else:
+            return words.keys()
         
     def _charfmt(self, c):
         return '--[{0}]'.format(c)
@@ -89,7 +94,7 @@ if __name__ == '__main__':
     tr = Trie('words.txt')
     #words = ["A", "to", "tea", "ted", "ten", "i", "in",  "inn"]
     #for word in words: tr.insert(word)   
-    tr.display()
+    #tr.display()
     print tr.find('across')
-    print tr.wordsWithPrefix('acc')
+    print tr.wordsWithPrefix('acc', True)
     
