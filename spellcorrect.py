@@ -19,4 +19,5 @@ def spellcorrect(word):
     return dict((w, trie.find(w)) for w in edits1(word) if trie.find(w))
 
 if __name__ == '__main__':
-    print spellcorrect('accross')
+    print "Correct spelling for 'accross' is ",
+    print spellcorrect('accross').keys()[0]
