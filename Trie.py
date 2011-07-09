@@ -15,7 +15,7 @@ class Trie:
         self.root = TrieNode(None, '')
     
     def insert(self, word):
-        word = word.strip()
+        word = word.strip().lower()
         if not word: 
             return
         current = self.root
@@ -27,7 +27,7 @@ class Trie:
         current.isWord = True
 
     def find(self, word):
-        word = word.strip()
+        word = word.strip().lower()
         current = self.root
         for w in word:
             if w in current.children:
@@ -36,38 +36,25 @@ class Trie:
                 return False
         return current.isWord
 
-    def charfmt(self, c):
+    def _charfmt(self, c):
         return '--[{0}]'.format(c)
 
     def _display(self, node, depth, fmt):
         childs = node.children.keys()
         if not childs: 
             return
+        tabs = '   '
         for c in childs[:-1]:
-            print fmt + '|' +  self.charfmt(c)
-            self._display(node.children[c], 0, fmt + '|   ')
-        print fmt + '+'  + self.charfmt(childs[-1])
-        self._display(node.children[childs[-1]], 0, fmt + '   ')
+            print fmt + '|' +  self._charfmt(c)
+            self._display(node.children[c], 0, fmt + '|' + tabs)
+        # last child is displayed by a plus to mark ending    
+        print fmt + '+'  + self._charfmt(childs[-1])
+        self._display(node.children[childs[-1]], 0, fmt + ' ' + tabs)
 
 
     def display(self):
         print '[-]'
         self._display(self.root, 0, ' ')
-            
-
-"""
-[-]
- |--[A]
- |--[T]
- |   |--[E]
- |       |--[A]
- |       |   |--[A]
- |       |--[D]
- |       |--[N]
- |--[I]
-     |--[N]
-         |--[N]
-"""
 
 """
 [-]
