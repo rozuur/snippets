@@ -2,13 +2,15 @@ class TrieNode:
     def __init__(self, parent, value):
         self.parent = parent
         self.children = {}
-        self.isWord = False
+        self.freq = 0 # frequenc of word
         if parent:
             parent.children[value] = self
-            
+
+    def isWord(self):
+        return self.freq != 0
+
     def __str__(self):
-        return '<Trie Node having children {0}>'\
-            .format(''.join(self.children))
+        return '<Trie Node having children %d>'%len(self.children)
     
 class Trie:
     def __init__(self, inputfile = None):
@@ -21,7 +23,6 @@ class Trie:
             for line in f.readlines():
                 for word in line.split():
                     self.insert(word)
-        
     
     def insert(self, word):
         word = word.strip().lower()
@@ -33,7 +34,7 @@ class Trie:
                 current = current.children[w]
             else:
                 current = TrieNode(current, w)
-        current.isWord = True
+        current.freq += 1
 
     def find(self, word):
         word = word.strip().lower()
@@ -43,8 +44,27 @@ class Trie:
                 current = current.children[w]
             else:
                 return False
-        return current.isWord
+        return current.freq
+    
+    def _allwords(self, node, prefix):
+        words = []
+        for char, child in node.children.items():
+            if child.isWord(): words.append(prefix + char)
+            words.extend(self._allwords(child, prefix + char))
+        return words
 
+    def wordsWithPrefix(self, prefix):
+        prefix = prefix.strip().lower()
+        if not prefix:
+            return
+        current = self.root
+        for c in prefix:
+            if c in current.children:
+                current = current.children[c]
+            else:
+                return []
+        return self._allwords(current, prefix)
+        
     def _charfmt(self, c):
         return '--[{0}]'.format(c)
 
@@ -67,9 +87,9 @@ class Trie:
 
 if __name__ == '__main__':
     tr = Trie('words.txt')
-    words = ["A", "to", "tea", "ted", "ten", "i", "in",  "inn"]
-    #words = ["to", "tea", "ted", "ten",]
-    for word in words:
-        tr.insert(word)
+    #words = ["A", "to", "tea", "ted", "ten", "i", "in",  "inn"]
+    #for word in words: tr.insert(word)   
     tr.display()
+    print tr.find('across')
+    print tr.wordsWithPrefix('acc')
     
