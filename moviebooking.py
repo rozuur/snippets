@@ -20,6 +20,7 @@ class MovieTheatre:
 
     def setClassPriceValues(self, relations):
         # updates value of each class
+        pass 
 
     def getClasses(self):
         # returns all the classes present in theatre, balcony, 1st class etc
