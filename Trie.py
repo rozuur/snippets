@@ -11,8 +11,17 @@ class TrieNode:
             .format(''.join(self.children))
     
 class Trie:
-    def __init__(self):
+    def __init__(self, inputfile = None):
         self.root = TrieNode(None, '')
+        if inputfile:
+            self._addWordsFromFile(inputfile)
+        
+    def _addWordsFromFile(self, inputfile):
+        with open(inputfile, 'r') as f:
+            for line in f.readlines():
+                for word in line.split():
+                    self.insert(word)
+        
     
     def insert(self, word):
         word = word.strip().lower()
@@ -56,22 +65,8 @@ class Trie:
         print '[-]'
         self._display(self.root, 0, ' ')
 
-"""
-[-]
- |--[A]
- |--[T]
- |   +--[E]
- |       |--[A]
- |       |   +--[A]
- |       |--[D]
- |       +--[N]
- +--[I]
-     +--[N]
-         +--[N]
-"""
-
 if __name__ == '__main__':
-    tr = Trie()
+    tr = Trie('words.txt')
     words = ["A", "to", "tea", "ted", "ten", "i", "in",  "inn"]
     #words = ["to", "tea", "ted", "ten",]
     for word in words:
