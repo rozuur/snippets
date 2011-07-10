@@ -11,6 +11,9 @@ trie = Trie.Trie('words.txt')
 trie.insert('accord')
 
 def suggest(prefix):
+    """
+    returns a list of words with prefix
+    """
     # returns all the words with prefix including its insertion count
     words = trie.wordsWithPrefix(prefix, True)
     # sort words based on its frequency
