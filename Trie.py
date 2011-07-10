@@ -1,7 +1,7 @@
 class TrieNode:
     def __init__(self, parent, value):
         self.parent = parent
-        self.children = {}
+        self.children = {} # stores child nodes
         self.freq = 0 # frequenc of word
         if parent:
             parent.children[value] = self
@@ -25,18 +25,21 @@ class Trie:
                     self.insert(word)
     
     def insert(self, word):
-        word = word.strip().lower()
+        word = word.strip().lower() # stores all words in lower
         if not word: 
             return
         current = self.root
-        for w in word:
-            if w in current.children:
-                current = current.children[w]
+        for c in word: 
+            if c in current.children: # if char c is in children nodes
+                current = current.children[c] # update current node
             else:
-                current = TrieNode(current, w)
-        current.freq += 1
+                current = TrieNode(current, c) # or create a new node and add c
+        current.freq += 1 # update no of times word is inserted
 
     def find(self, word):
+        """
+        returns no of times word is inserted into Trie
+        """
         word = word.strip().lower()
         current = self.root
         for w in word:
@@ -47,6 +50,10 @@ class Trie:
         return current.freq
     
     def _allwords(self, node, prefix):
+        """
+        recursively finds all words starting with prefix
+        returns a dictionary of words and frequency
+        """
         words = {}
         for char, child in node.children.items():
             if child.isWord(): 
@@ -55,6 +62,10 @@ class Trie:
         return words
 
     def wordsWithPrefix(self, prefix, includeFrequency = False):
+        """
+        based on includeFrequency returns a list or dictionary of words
+        starting with prefix
+        """
         prefix = prefix.strip().lower()
         if not prefix:
             return
@@ -63,7 +74,7 @@ class Trie:
             if c in current.children:
                 current = current.children[c]
             else:
-                return []
+                return [] # prefix is not present in trie 
         words = self._allwords(current, prefix)
         if includeFrequency:
             return words
@@ -74,6 +85,9 @@ class Trie:
         return '--[{0}]'.format(c)
 
     def _display(self, node, depth, fmt):
+        """
+        recursively displays each word
+        """
         childs = node.children.keys()
         if not childs: 
             return
